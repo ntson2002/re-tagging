@@ -88,9 +88,11 @@ List of columns:
 ** 8: Gold tag at layer 2 (Requisite and effectuation parts)
 ** 9: Gold tag at layer 3 (Unless part)
 
-`FEATURE=<feature_description>`
-
+Feature description format `FEATURE=name1.column_index1.embedding_size1;...`. For example: 
 ```
+	FEATURE=pos.1.10,chunk.2.10,wh.3.10,if.4.10,s.5.10,layer1.7.10,layer2.8.10
+```
+
 Actions	NNS	B-NP	O	O	O	O	B-R	B-E	O
 for	IN	I-NP	O	O	O	O	I-R	O	O
 preservation	NN	I-NP	O	O	O	O	I-R	O	O
