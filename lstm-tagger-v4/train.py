@@ -15,53 +15,17 @@ from loader import augment_with_pretrained
 from model import Model
 
 
-# np.random.seed(1234)
 seed = 1234
-
 np.random.seed(seed)
 print "random seed to reproduce the result: ", seed
 
-'''
-    JPC-RRE data
-'''
-
-# pre_emb_default = ""
-
-# data_folder   = ""
-pre_emb_default = os.getenv("MY_HOME") + "/Bitbucket/lstm-crf-tagging/experiments/jp-rre/data/pretrained/rre.w2v100.txt"
-data_folder   = os.getenv("MY_HOME") + "/Bitbucket/lstm-crf-tagging/experiments/journal/jcc/data/train-dev-test/1layer"
-train_default = data_folder + "/fold.0.train.conll"
-dev_default   = data_folder + "/fold.0.dev.conll"
-test_default  = data_folder + "/fold.0.test.conll"
-default_features = "pos.1.10,chunk.2.10,wh.3.10,if.4.10,s.5.10"
-
-# train_default = ""
-# dev_default   = ""
-# test_default  = ""
-# default_features = ""
+pre_emb_default = ""
+train_default = ""
+dev_default   = ""
+test_default  = ""
+default_features = ""
 default_prefix="0"
 
-
-'''
-    Vietnamese NER data
-'''
-
-# pre_emb_default = "/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/vn-ner/data/pre-trained/w2v.100"
-# data_folder = "/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/vn-ner/data/dev"
-# train_default = data_folder + "/train.conll"
-# dev_default =  data_folder + "/val.conll"
-# test_default =  data_folder + "/test.conll"
-
-# test_default = "/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/vn-ner/data/official-test/ner-test.conll"
-# default_features = "pos.1.30,chunk.2.30"
-# default_prefix="pos30-chunk30"
-
-# pre_emb_default = ""
-# train_default = ""
-# dev_default = ""
-# test_default = ""
-# default_prefix=""
-# default_features="None"
 
 optparser = optparse.OptionParser()
 optparser.add_option(
@@ -170,8 +134,6 @@ optparser.add_option(
     help="number of epoch"
 )
 
-
-
 opts = optparser.parse_args()[0]
 print opts
 features = []
@@ -237,12 +199,6 @@ tag_scheme = parameters['tag_scheme']
 train_sentences = loader.load_sentences(opts.train, lower, zeros)
 dev_sentences = loader.load_sentences(opts.dev, lower, zeros)
 test_sentences = loader.load_sentences(opts.test, lower, zeros)
-print "=====SAMPLE DATA====="
-from pprint import pprint
-# pprint(test_sentences)
-# for tokens in train_sentences[0]:
-#     print "\t".join(tokens)
-print "====================="
 
 # Use selected tagging scheme (IOB / IOBES)
 update_tag_scheme(train_sentences, tag_scheme)
