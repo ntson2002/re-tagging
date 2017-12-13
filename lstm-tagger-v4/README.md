@@ -75,6 +75,21 @@ np.random.seed(1234)
 ```
 ### Japanese Civil Code RRE corpus
 
+
+List of columns:
+** 0: Head word
+** 1: POS
+** 2: NP chunks
+** 3: WH clause
+** 4: Clause begin with preposition
+** 5: Clause in S node of the syntactic tree
+** 6: *Unused*
+** 7: Gold tag at layer 1 (Requisite and effectuation parts)
+** 8: Gold tag at layer 2 (Requisite and effectuation parts)
+** 9: Gold tag at layer 3 (Unless part)
+
+`FEATURE=<feature_description>`
+
 ```
 Actions	NNS	B-NP	O	O	O	O	B-R	B-E	O
 for	IN	I-NP	O	O	O	O	I-R	O	O
