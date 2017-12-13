@@ -93,6 +93,9 @@ Feature description format `FEATURE=name1.column_index1.embedding_size1;...`. Fo
 	FEATURE=pos.1.10,chunk.2.10,wh.3.10,if.4.10,s.5.10,layer1.7.10,layer2.8.10
 ```
 
+Data format:
+
+```
 Actions	NNS	B-NP	O	O	O	O	B-R	B-E	O
 for	IN	I-NP	O	O	O	O	I-R	O	O
 preservation	NN	I-NP	O	O	O	O	I-R	O	O
