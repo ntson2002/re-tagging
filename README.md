@@ -10,5 +10,5 @@ Two implemented models:
 
 * [lstm-tagger-v4](https://github.com/ntson2002/re-tagging/tree/master/lstm-tagger-v4): Implementation of single BI-LSTM-CRF with additional features to recognize non-overlapping RE parts by modeling the RRE task as the single layer sequence labeling task (1 layer). 
 
-* [multi-lstm](https://github.com/ntson2002/re-tagging/tree/master/multi-lstm-tagger): Implementation of Multilayer BiLSTM-CRF model, and Multilayer BiLSTM-MLP-CRF to recognize overlapping RE parts by modeling the RRE task as the multilayer sequence labeling task (n layer).
+* [multi-lstm-tagger](https://github.com/ntson2002/re-tagging/tree/master/multi-lstm-tagger): Implementation of Multilayer BiLSTM-CRF model, and Multilayer BiLSTM-MLP-CRF to recognize overlapping RE parts by modeling the RRE task as the multilayer sequence labeling task (n layer).
 
