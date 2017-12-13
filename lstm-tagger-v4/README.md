@@ -8,7 +8,7 @@ To use the tagger, you need Python 2.7, with Numpy and Theano installed.
 
 ## Train a model
 
-To train your own model, you need to use the train.py script and provide the location of the training, development and testing set:
+To train your own model, you need to use the train.py script and provide the location of the training, development and testing set. The following script will train the model to recognize RE part at layer 3 which used word, syntactic features and tag of layer 1,2 as features:
 
 ```
 #!/bin/bash
@@ -31,7 +31,7 @@ CHARDIM=0
 
 FEATURE=pos.1.10,chunk.2.10,wh.3.10,if.4.10,s.5.10,layer1.7.10,layer2.8.10
 PREEMB=./data/pretrained-emb/rre.w2v100.txt
-
+PREFIX=layer3
 
 BESTFILE=best.txt
 
@@ -54,9 +54,9 @@ python train.py \
 	--crf $CRF \
 	--pre_emb $PREEMB \
 	--dropout 0.5 \
-	--all_emb $ALLEMB \
+	--all_emb 1 \
 	--freq_eval 1000 \
-	--prefix=$FOLD > logs/log.txt
+	--prefix=$PREFIX > logs/log.txt
 
 ```
 
@@ -67,7 +67,7 @@ There are many parameters you can tune (CRF, dropout rate, embedding dimension, 
 ./train.py --help
 ```
 
-Input files for the training script have to follow the same format than the CoNLL2003 sharing task: each word has to be on a separate line, and there must be an empty line after each sentence. A line must contain at least 2 columns, the first one being the word itself, the last one being the named entity. It does not matter if there are extra columns that contain tags or chunks in between. Tags have to be given in the IOB format (it can be IOB1 or IOB2).
+Input files for the training script have to follow the same format than the CoNLL2003 sharing task: each word has to be on a separate line, and there must be an empty line after each sentence. A line must contain at least 2 columns, the first one being the word itself, the last one being the named entity. It does not matter if there are extra columns that contain tags or chunks in between. Tags have to be given in the IOB format.
 
 ### Reproduce the result
 ```
