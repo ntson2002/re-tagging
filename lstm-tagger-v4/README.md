@@ -1,10 +1,4 @@
-# lstm-tagger-v4 
-(Revised: March 28)
-
-## BI-LSTM-CRF with features with 1 layer 
-
-BI-LSTM-CRF Tagger is an implementation of a Named Entity Recognizer that obtains state-of-the-art performance in NER on the 4 CoNLL datasets (English, Spanish, German and Dutch) without resorting to any language-specific knowledge or resources such as gazetteers. Details about the model can be found at: http://arxiv.org/abs/1603.01360
-
+# lstm-tagger-v4: BI-LSTM-CRF with features for single layer sequence labeling task
 
 
 ## Initial setup
@@ -17,8 +11,10 @@ To use the tagger, you need Python 2.7, with Numpy and Theano installed.
 To train your own model, you need to use the train.py script and provide the location of the training, development and testing set:
 
 ```
-FOLDER=/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/jp-rre/data/new/new-3layer
-PROGRAM=/home/s1520203/Bitbucket/lstm-crf-tagging/lstm-tagger-v3
+#!/bin/bash
+
+FOLDER=$MY_HOME/Bitbucket/lstm-crf-tagging/experiments/journal/jcc/data/train-dev-test/3layer
+PROGRAM=$MY_HOME/Bitbucket/lstm-crf-tagging/lstm-tagger-v4
 
 EPOCH=200
 TYPE=sgd-lr_.002
@@ -29,19 +25,39 @@ LOWER=0
 WORDDIM=100
 WORDLSTMDIM=100
 CRF=1
+ALLEMB=0
 RELOAD=0
 CHARDIM=0
 
 
-FEATURE=pos.1.10,layer1.7.10,layer2.8.10
-ALLEMB=1
-PREEMB=/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/jp-rre/data/pretrained/rre.w2v100.txt
+FEATURE=pos.1.10,chunk.2.10,wh.3.10,if.4.10,s.5.10,layer1.7.10,layer2.8.10
+PREEMB=$MY_HOME/Bitbucket/lstm-crf-tagging/experiments/jp-rre/data/pretrained/rre.w2v100.txt
 
 
-###########
-FOLD=0
-BESTFILE=best.$FOLD.txt
-python $PROGRAM/train.py --char_dim $CHARDIM --word_lstm_dim $WORDLSTMDIM --train $FOLDER/fold.$FOLD.train.conll --dev $FOLDER/fold.$FOLD.dev.conll --test $FOLDER/fold.$FOLD.test.conll --best_outpath $BESTFILE --lr_method $TYPE --word_dim $WORDDIM --tag_scheme $TAGSCHEME --cap_dim $CAPDIM --zeros $ZERO --lower $LOWER --reload $RELOAD --external_features $FEATURE --epoch $EPOCH --crf $CRF --pre_emb $PREEMB --prefix=$FOLD
+BESTFILE=best.txt
+
+python $PROGRAM/train.py \
+	--char_dim $CHARDIM \
+	--word_lstm_dim $WORDLSTMDIM \
+	--train $FOLDER/train.conll \
+	--dev $FOLDER/dev.conll \
+	--test $FOLDER/test.conll \
+	--best_outpath $BESTFILE \
+	--lr_method $TYPE \
+	--word_dim $WORDDIM \
+	--tag_scheme $TAGSCHEME \
+	--cap_dim $CAPDIM \
+	--zeros $ZERO \
+	--lower $LOWER \
+	--reload $RELOAD \
+	--external_features $FEATURE \
+	--epoch $EPOCH \
+	--crf $CRF \
+	--pre_emb $PREEMB \
+	--dropout 0.5 \
+	--all_emb $ALLEMB \
+	--freq_eval 1000 \
+	--prefix=$FOLD > logs/log.txt
 
 ```
 
@@ -107,15 +123,3 @@ to	TO	I-VP	O	I-IF	O	VP/S/VP/S/SBAR/NP/PP/ADJP/NP/PP/VP/S/	I-R	O	O
 exist	VB	E-VP	O	E-IF	O	VP/S/VP/S/SBAR/NP/PP/ADJP/NP/PP/VP/S/	I-R	O	O
 .	.	O	O	O	O	S/	O	O	O
 ```
-### Japanase Pension Law RRE corpus 
-
-
-### English NER corpus 
-
-
-### Vietnamse NER corpus
-
-with open("parameters.pkl", "rb") as f:
-    import cPickle
-    data = cPickle.load(f)
-    print data
