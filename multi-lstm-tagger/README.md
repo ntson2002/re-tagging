@@ -110,7 +110,7 @@ words	NNS	E-NP	E-WHNP	O	O	O	O	I-E	O
 
 ### Training 
 
-Parameters:
+#### Parameters:
 * `--model_type`: 
 	* `multilayer` : Multi-BiLSTM-CRF
 	* `struct` : Multi-BiLSTM-MLP-CRF with 1 dense layer in MLPs 
@@ -118,7 +118,8 @@ Parameters:
 
 * `--tag_columns_string` : Indexs of gold columns seperated by commas. E.g `7,8,9`
 * `--external_features` : Features description. The format is follows: `name1.column1.size1,name2.column2.size2`
-A sample tranining script:
+
+#### A sample tranining script:
 ```
 FOLDER=<DATA_FOLDER>
 PROGRAM=<PROGRAM_FOLDER>
