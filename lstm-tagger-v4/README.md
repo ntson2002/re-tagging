@@ -67,8 +67,6 @@ There are many parameters you can tune (CRF, dropout rate, embedding dimension, 
 ./train.py --help
 ```
 
-Input files for the training script have to follow the same format than the CoNLL2003 sharing task: each word has to be on a separate line, and there must be an empty line after each sentence. A line must contain at least 2 columns, the first one being the word itself, the last one being the named entity. It does not matter if there are extra columns that contain tags or chunks in between. Tags have to be given in the IOB format.
-
 ### Reproduce the result
 ```
 np.random.seed(1234)
