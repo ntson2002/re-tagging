@@ -4,198 +4,165 @@
 
 To use the tagger, you need Python 2.7, with Numpy and Theano installed.
 
-### Input data:
-Input files for the training script have to follow the same format than the CoNLL2003 sharing task: each word has to be on a separate line, and there must be an empty line after each sentence. 
+### Input data
 
-Each line contains a words, its features and the ground truth tags at all layers. The below example show the format of our training data file for nested NER. Column 0 is the head words, column 1 and 2 is POS and CHUNK features, column 3 and 4 is groun truth tags at layer 1 and 2. This data sets has 2 type of features and two layers.
+The input data follows the CoNLL format. Below is an example of training data for JCC-RRE task:
 
+The data has 9 columns:
 
+* Column 0:
+* Column 1, 2, 3, 4, 5: Syntactic features 
+* Column 6: Unused 
+* Column 7, 8, 9: Gold labels for 3 layers 
 
 ```
- col_0      col_1  col_2  col_3  col_4 
----------------------------------------
- Chủ_tịch   N      B-NP   O      O     
- UBND       Ny     B-NP   B-ORG  O
- tỉnh       N      I-NP   I-ORG  B-LOC
- Quảng_Nam  NNP    I-NP   I-ORG  I-LOC
- Nguyễn     NNP    B-NP   B-PER  O
- Xuân       NNP    I-NP   I-PER  O
- Phúc       NNP    I-NP   I-PER  O
- cho        V      B-VP   O      O     
- biết       V      B-VP   O      O     
- tỉnh       N      B-NP   O      O     
- sẽ         R      O      O      O     
- đầu_tư     V      B-VP   O      O     
- xây_dựng   V      B-VP   O      O     
- khu_phố    N      B-NP   O      O     
- đi         V      B-VP   O      O     
- bộ         N      B-NP   O      O     
- tại        E      B-PP   O      O     
- 6          M      B-NP   O      O     
- đường      N      B-NP   O      O     
- phố        N      B-NP   O      O     
- chính      A      B-AP   O      O     
- của        E      B-PP   O      O     
- khu        N      B-NP   O      O     
- phố        N      B-NP   O      O     
- cổ         A      B-AP   O      O
- Hội_An     NNP    B-NP   B-LOC  O
- ,          CH     O      O      O     
- đồng_thời  C      O      O      O     
- tổ_chức    V      B-VP   O      O     
- chợ        N      B-NP   O      O     
+Actions	NNS	B-NP	O	O	O	O	B-R	B-E	O
+for	IN	I-NP	O	O	O	O	I-R	O	O
+preservation	NN	I-NP	O	O	O	O	I-R	O	O
+of	IN	I-NP	O	O	O	O	I-R	O	O
+possession	NN	E-NP	O	O	O	O	I-R	O	O
+may	MD	O	O	O	O	O	O	I-E	O
+be	VB	O	O	O	O	O	O	I-E	O
+brought	VBN	O	O	O	O	O	O	I-E	O
+so	RB	O	O	O	O	O	O	I-E	O
+long	RB	O	O	O	O	O	O	I-E	O
+as	IN	O	O	B-IF	O	O	O	I-E	O
+the	DT	B-NP	O	I-IF	B-S	O	O	I-E	O
+danger	NN	I-NP	O	I-IF	I-S	O	O	I-E	O
+of	IN	I-NP	O	I-IF	I-S	O	O	I-E	O
+disturbance	NN	E-NP	O	I-IF	I-S	O	O	I-E	O
+exists	VBZ	E-VP	O	I-IF	E-S	O	O	I-E	O
+.	.	O	O	E-IF	O	O	O	O	O
+									
+In	IN	O	O	O	O	O	B-R	O	O
+such	JJ	B-NP	O	O	O	O	I-R	O	O
+cases	NNS	E-NP	O	O	O	O	I-R	O	O
+,	,	O	O	O	O	O	O	O	O
+the	DT	B-NP	O	O	O	O	B-E	O	O
+proviso	NN	I-NP	O	O	O	O	I-E	O	O
+to	TO	I-NP	O	O	O	O	I-E	O	O
+the	DT	I-NP	O	O	O	O	I-E	O	O
+preceding	VBG	I-NP	O	O	O	O	I-E	O	O
+paragraph	NN	E-NP	O	O	O	O	I-E	O	O
+shall	MD	O	O	O	O	O	I-E	O	O
+apply	VB	O	O	O	O	O	I-E	O	O
+mutatis	JJ	B-NP	O	O	O	O	I-E	O	O
+mutandis	NNS	E-NP	O	O	O	O	I-E	O	O
+if	IN	O	O	B-IF	O	O	B-R	O	O
+possessed	NNP	B-NP	O	I-IF	O	O	I-R	O	O
+Thing	NNP	E-NP	O	I-IF	O	O	I-R	O	O
+is	VBZ	O	O	I-IF	O	O	I-R	O	O
+likely	JJ	O	O	I-IF	O	O	I-R	O	O
+to	TO	O	O	I-IF	O	O	I-R	O	O
+be	VB	O	O	I-IF	O	O	I-R	O	O
+damaged	VBN	O	O	I-IF	O	O	I-R	O	O
+by	IN	O	O	I-IF	O	O	I-R	O	O
+construction	NN	E-NP	O	E-IF	O	O	I-R	O	O
+.	.	O	O	O	O	O	O	O	O
+									
+Any	DT	B-NP	O	O	O	O	B-R	B-E	O
+person	NN	E-NP	O	O	O	O	I-R	I-E	O
+who	WP	O	B-WHNP	O	O	O	I-R	O	O
+is	VBZ	O	I-WHNP	O	O	O	I-R	O	O
+neither	RB	O	I-WHNP	O	O	O	I-R	O	O
+an	DT	B-NP	I-WHNP	O	O	O	I-R	O	O
+incorporated	JJ	I-NP	I-WHNP	O	O	O	I-R	O	O
+association	NN	I-NP	I-WHNP	O	O	O	I-R	O	O
+nor	CC	I-NP	I-WHNP	O	O	O	I-R	O	O
+an	DT	I-NP	I-WHNP	O	O	O	I-R	O	O
+incorporated	JJ	I-NP	I-WHNP	O	O	O	I-R	O	O
+foundation	NN	E-NP	E-WHNP	O	O	O	I-R	O	O
+shall	MD	O	O	O	O	O	O	I-E	O
+not	RB	O	O	O	O	O	O	I-E	O
+use	VB	O	O	O	O	O	O	I-E	O
+in	IN	O	O	O	O	O	O	I-E	O
+its	PRP$	B-NP	O	O	O	O	O	I-E	O
+name	NN	E-NP	O	O	O	O	O	I-E	O
+the	DT	B-NP	O	O	O	O	O	I-E	O
+words	NNS	E-NP	O	O	O	O	O	I-E	O
+``	``	O	O	O	O	O	O	I-E	O
+incorporated	VBN	O	O	O	O	O	O	I-E	O
+association	NN	B-NP	O	O	O	O	O	I-E	O
+''	''	I-NP	O	O	O	O	O	I-E	O
+or	CC	I-NP	O	O	O	O	O	I-E	O
+``	``	I-NP	O	O	O	O	O	I-E	O
+incorporated	JJ	I-NP	O	O	O	O	O	I-E	O
+foundation	NN	I-NP	O	O	O	O	O	I-E	O
+''	''	E-NP	O	O	O	O	O	I-E	O
+,	,	O	O	O	O	O	O	I-E	O
+or	CC	O	O	O	O	O	O	I-E	O
+other	JJ	B-NP	O	O	O	O	O	I-E	O
+words	NNS	E-NP	O	O	O	O	O	I-E	O
+which	WDT	O	B-WHNP	O	O	O	O	I-E	O
+is	VBZ	O	I-WHNP	O	O	O	O	I-E	O
+likely	JJ	O	I-WHNP	O	O	O	O	I-E	O
+to	TO	O	I-WHNP	O	O	O	O	I-E	O
+be	VB	O	I-WHNP	O	O	O	O	I-E	O
+mistaken	VBN	O	I-WHNP	O	O	O	O	I-E	O
+for	IN	O	I-WHNP	O	O	O	O	I-E	O
+those	DT	B-NP	I-WHNP	O	O	O	O	I-E	O
+words	NNS	E-NP	E-WHNP	O	O	O	O	I-E	O
+.	.	O	O	O	O	O	O	O	O
 ```
-### Train a model
 
-To train your own NER model, you need to use the train.py script and provide the location of the training, development and testing set. Below is the script for training our best models. 
+### Training 
+```
+FOLDER=<DATA_FOLDER>
+PROGRAM=<PROGRAM_FOLDER>
 
-* The line `FEATURE=pos.1.30,chunk.2.30` describe the features and feature embedding size. It has the following format: `name1.col_index1.embedding_size1,name2.col_index2.embedding_size2,..`.
-* `GOLDCOLUMNS=3,4`: indexes of the ground truth columns in training data file.
-
-```sh 
-FOLDER=[Data folder]
-PROGRAM=[Program folder]
-
-EPOCH=150
+EPOCH=200
 TYPE=sgd-lr_.002
 TAGSCHEME=iobes
-CAPDIM=3
-ZERO=0
+CAPDIM=0
+ZERO=1
 LOWER=0
-WORDDIM=100
-WORDLSTMDIM=100
-CRF=1
+WORDDIM=50
+WORDLSTMDIM=50
+
 RELOAD=0
-CHARDIM=25
+CHARDIM=0
+FEATURE=pos.1.5,chunk.2.5,wh.3.5,if.4.5,s.5.5
+GOLDCOLUMNS=7,8,9
 
-FEATURE=pos.1.30,chunk.2.30  
+CRF=1
+ALLEMB=0
+PREEMB=$MY_HOME/Bitbucket/lstm-crf-tagging/experiments/jp-rre/data/pretrained/rre.w2v50.txt
 
-GOLDCOLUMNS=3,4
+START=0
+END=9
 
-ALLEMB=1
-PREEMB=/home/s1520203/Bitbucket/lstm-crf-tagging/experiments/vn-ner/data/pre-trained/train.txt.w2vec100
-
-###########
-PREFIX=p30c30
-BESTFILE=best.$PREFIX.txt
-python $PROGRAM/train.py --char_dim $CHARDIM --word_lstm_dim $WORDLSTMDIM --train $FOLDER/train2.conll --dev $FOLDER/dev2.conll --test $FOLDER/testb2.conll --best_outpath $BESTFILE --reload $RELOAD --lr_method $TYPE --word_dim $WORDDIM --tag_scheme $TAGSCHEME --cap_dim $CAPDIM --zeros $ZERO --lower $LOWER --reload $RELOAD --external_features $FEATURE --epoch $EPOCH --crf $CRF --pre_emb $PREEMB --prefix=$PREFIX --tag_columns_string $GOLDCOLUMNS
-
+MODEL_TYPE=struct_mlp
+for (( FOLD=$START; FOLD<=$END; FOLD++ ))
+do
+	BESTFILE=best.$FOLD.txt
+	python -u $PROGRAM/train_struct.py \
+		--char_dim $CHARDIM \
+		--word_lstm_dim $WORDLSTMDIM \
+		--train $FOLDER/fold.$FOLD.train.conll \
+		--dev $FOLDER/fold.$FOLD.dev.conll \
+		--test $FOLDER/fold.$FOLD.test.conll \
+		--best_outpath $BESTFILE \
+		--reload $RELOAD \
+		--lr_method $TYPE \
+		--word_dim $WORDDIM \
+		--tag_scheme $TAGSCHEME \
+		--cap_dim $CAPDIM \
+		--zeros $ZERO \
+		--lower $LOWER \
+		--reload $RELOAD \
+		--external_features $FEATURE \
+		--epoch $EPOCH \
+		--crf $CRF \
+		--pre_emb $PREEMB \
+		--prefix=$FOLD \
+		--tag_columns_string $GOLDCOLUMNS \
+		--model_type=$MODEL_TYPE \
+		--all_emb $ALLEMB > logs/log.$FOLD.$HOSTNAME.txt  2>&1 &
+done
 ```
 
-The trained will be saved at a subfolder folder of the folder `models`. The name of this folder is automatically set by the program.
+### Predict 
 
-### Use the trained model to tag the test data
 
-Program: `predict_file.py`
+### Sample output 
 
-Input file `testb2_sample_notag.conll`: The same format with the training data file but the tag at ground truth column are `O` . 
-
-```
- col_0        col_1  col_2  col_3  col_4 
------------------------------------------
-
- Bí_thư       N      B-NP   O      O     
- Đảng_uỷ      N      B-NP   O      O     
- phường       N      I-NP   O      O     
- Nghi_Hải     NNP    I-NP   O      O     
- (            CH     O      O      O     
- Cửa_Lò       NNP    B-NP   O      O     
- ,            CH     O      O      O     
- Nghệ_An      NNP    B-NP   O      O     
- )            CH     O      O      O     
- Nguyễn       NNP    B-NP   O      O     
- Văn          NNP    I-NP   O      O     
- Bích         NNP    I-NP   O      O     
- đã           R      O      O      O     
- quả_quyết    V      B-VP   O      O     
- với          E      B-PP   O      O     
- chúng_tôi    P      B-NP   O      O     
- như_vậy      X      O      O      O     
- .            CH     O      O      O     
-                                         
- Ông          Ns     B-NP   O      O     
- Nguyễn       NNP    B-NP   O      O     
- Thanh        NNP    I-NP   O      O     
- Hoà          NNP    I-NP   O      O     
- ,            CH     O      O      O     
- cục_trưởng   N      B-NP   O      O     
- Cục          N      B-NP   O      O     
- Quản_lý      V      I-NP   O      O     
- lao_động     N      I-NP   O      O     
- ngoài        N      I-NP   O      O     
- nước         N      I-NP   O      O     
- (            CH     O      O      O     
- Bộ           N      B-NP   O      O     
- Lao_động     N      I-NP   O      O     
- -            CH     I-NP   O      O     
- thương_binh  N      I-NP   O      O     
- &            CH     I-NP   O      O     
- xã_hội       N      I-NP   O      O     
- )            CH     O      O      O     
- ,            CH     O      O      O     
- cũng         R      O      O      O     
- chung        A      B-AP   O      O     
- quan_điểm    N      B-NP   O      O     
- này          P      B-NP   O      O     
- ...          CH     O      O      O     
-```
-
-Predict a file:
-
-``` sh
-
-TESTFILE=testb2_sample_notag.conll  # path of test file 
-MODEL=./models/vn_p30c30 # saved model 
-OUTPUT=testb2_sample_predicted_tag.conll # path of output 
-python predict_file.py --test_file $TESTFILE --out_file $OUTPUT --model $MODEL
-
-```
-
-Output: `testb2_sample_predicted_tag.conll`
-
-```
- Bí_thư       O      O     
- Đảng_uỷ      B-ORG  O     
- phường       I-ORG  B-LOC 
- Nghi_Hải     I-ORG  I-LOC 
- (            O      O     
- Cửa_Lò       B-LOC  O     
- ,            O      O     
- Nghệ_An      B-LOC  O     
- )            O      O     
- Nguyễn       B-PER  O     
- Văn          I-PER  O     
- Bích         I-PER  O     
- đã           O      O     
- quả_quyết    O      O     
- với          O      O     
- chúng_tôi    O      O     
- như_vậy      O      O     
- .            O      O     
-                           
- Ông          O      O     
- Nguyễn       B-PER  O     
- Thanh        I-PER  O     
- Hoà          I-PER  O     
- ,            O      O     
- cục_trưởng   O      O     
- Cục          B-ORG  O     
- Quản_lý      I-ORG  O     
- lao_động     I-ORG  O     
- ngoài        I-ORG  O     
- nước         I-ORG  O     
- (            O      O     
- Bộ           B-ORG  O     
- Lao_động     I-ORG  O     
- -            I-ORG  O     
- thương_binh  I-ORG  O     
- &            I-ORG  O     
- xã_hội       I-ORG  O     
- )            O      O     
- ,            O      O     
- cũng         O      O     
- chung        O      O     
- quan_điểm    O      O     
- này          O      O     
- ...          O      O     
-```
