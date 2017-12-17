@@ -141,6 +141,13 @@ done
 
 ### Predict 
 
+```
+PROGRAM=<PROGRAM_FOLDER>
+TEST=<CONNL_FILE>
+MODEL=<saved_model_path>
+OUTPUT=<OUTPATH>
+python $PROGRAM/predict_file.py -m $MODEL -t $TEST --out_file $OUTPUT 
+```
 
 ### Sample output 
 
