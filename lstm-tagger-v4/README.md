@@ -6,9 +6,9 @@
 To use the tagger, you need Python 2.7, with Numpy and Theano installed.
 
 
-## Train a model
+## Train a model which recognize RE parts in *1 layer*
 
-To train your own model, you need to use the train.py script and provide the location of the training, development and testing set. The following script will train the model to recognize RE parts at layer 3 which uses word, syntactic features and tag of layer 1,2 as features (see parameter `--external_features`):
+To train your own model, you need to use the train.py script and provide the location of the training, development and testing set. The following script will train the model to recognize RE parts for layer 3 which uses word, syntactic features and tag of layer 1,2 as features (see parameter `--external_features`):
 
 ```
 #!/bin/bash
